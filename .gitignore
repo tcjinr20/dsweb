@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 plugs/py/perface/
+plugs/py/test/
 node_modules/
 plugs/py/upload/
 build/

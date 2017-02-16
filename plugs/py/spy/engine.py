@@ -9,7 +9,12 @@ class dsEngine:
     status = 1
 
     def start(self):
-        self._run()
+        while self.status != 0:
+            self._run()
+
+        for d in self.dss:
+            d.exit()
+        self.exit()
 
     def _run(self):
         stopds = []
@@ -17,8 +22,7 @@ class dsEngine:
             bool = d.run()
             if bool is None:
                 stopds.append(d)
-
-                # 移除停止的蜘蛛
+        # 移除停止的蜘蛛
         if len(stopds) > 0:
             for s in stopds:
                 s.exit()
@@ -26,13 +30,6 @@ class dsEngine:
 
         if len(self.dss) == 0:
             self.stop()
-
-        if self.status != 0:
-            self._run()
-        else:
-            for d in self.dss:
-                d.exit()
-            self.exit()
 
     def add(self, ds):
         self.dss.append(ds)

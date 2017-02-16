@@ -7,7 +7,9 @@ from getopt import getopt
 from analysis import AnalysisByDB, AnalysisByFold, Classfy
 from monodb import status
 import threading
-
+import sys
+"""递归限制解除"""
+sys.setrecursionlimit(1000000)
 
 def check():
     if app and app.status == 0:

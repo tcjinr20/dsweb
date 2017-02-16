@@ -7,20 +7,12 @@ import urllib
 from glob import glob
 import cv2
 from monodb import conn
-# from pymongo import MongoClient
-import  sys
-"""递归限制解除"""
-# sys.setrecursionlimit(1000000)
 import descripe as desc
 import dssetting as config
 import functions as fun
 from descripe import *
 from spy.redisdb import DBhash
 import shutil
-
-
-# conn = MongoClient('127.0.0.1', 27017)
-
 
 class AnalysisByDB:
     count = 0

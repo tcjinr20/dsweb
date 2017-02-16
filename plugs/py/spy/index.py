@@ -5,6 +5,9 @@ from engine import dsEngine
 from spy import dsImg
 import threading
 from monodb import status
+import sys
+"""递归限制解除"""
+sys.setrecursionlimit(1000000)
 
 if __name__ == "__main__":
     # opt, arg = getopt(sys.argv[1:],'d:')
