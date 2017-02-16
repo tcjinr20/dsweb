@@ -1,0 +1,84 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>Sprite 类<small>用于表示位图图像的显示对象</small></h1>
+</div>
+<canvas id="can"></canvas>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+
+<canvas id="can1"></canvas>
+<pre class="prettyprint lang-js" id="d1">
+
+</pre>
+<script id="s">
+    var stage = null;
+    var list = [];
+    var num = 1000;
+    var speed = 5;
+    $s.ready(function () {
+        //this 唯一舞台stage
+        for(var i = 0;i<num;i++){
+            var s = new $s.dsSprite();
+            s.graphics.beginFill(0xffffff*Math.random());
+            s.graphics.drawCircle(0,0,20);
+            s.x = this.stageWidth*Math.random();
+            s.y = this.stageHeight*Math.random()
+            this.addChild(s);
+            list.push({ball:s,spx:speed,spy:speed});
+        }
+        stage = this;
+        stage.addEventListener(Event.ENTER_FRAME,frame);
+    },{canvas:"#can",height:323});
+
+    function frame(e){
+        for (var i = 0;i<list.length;i++){
+            var l = list[i];
+            l.ball.x += l.spx;
+            l.ball.y +=l.spy;
+            if(l.ball.x<0 || l.ball.x>stage.stageWidth){
+                l.spx = speed*Math.random()*(l.spx/Math.abs(l.spx))*(-1);
+            }
+            if(l.ball.y<0 || l.ball.y>stage.stageHeight){
+                l.spy = speed*Math.random()*(l.spy/Math.abs(l.spy))*-1;
+            }
+        }
+    }
+
+
+</script>
+<script id="s1">
+    $s.ready(function () {
+        var s = new $s.dsSprite();
+        s.graphics.beginFill(0xffffff*Math.random());
+        s.graphics.drawRect(0,0,150,50);
+        s.name="rotation";
+        s.scaleX =0.5
+        s.y=s.x = 100;
+        this.addChild(s);
+
+        s = new $s.dsSprite();
+        s.graphics.beginFill(0xffffff*Math.random());
+        s.graphics.drawEllipse(0,0,100,50);
+        s.name='ellipse';
+        s.y = 200;
+        s.x = 300;
+        this.addChild(s);
+        this.addEventListener(Event.ENTER_FRAME,frame2);
+
+    },{canvas:"#can1",height:323});
+
+    var sped=0.1;
+    function frame2(){
+        var d =this.getChildByName('rotation');
+        d.rotation+=1;
+        var e = this.getChildByName('ellipse');
+        e.scaleX+=sped;
+        if(e.scaleX>2 || e.scaleX<-2)sped*=-1;
+    }
+</script>
+<script>
+    insertSri('#s','#d');
+    insertSri('#s1','#d1');
+</script>
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=320, initial-scale=1"/>
+    <script src="/js/jquery-3.1.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<div>
+    <input type="button" value="流传播">
+    <input type="button" value="帧传播">
+    <% for(var i=0;i<list.length;i++){%>
+    <input type="button" value="<%=list[i]%>" onclick="beginlook(this)">
+    <%}%>
+</div>
+<div>
+    <video></video>
+</div>
+
+<div>
+    <canvas width="480" height="680" ></canvas>
+</div>
+
+<script>
+    var run = false;
+    function beginlook(e){
+        if(run) return ;
+        run = true;
+        var socket = io.connect('/');
+        socket.on('connect',function () {
+            alert("收听 connect"+e.value);
+            socket.emit('lookzhubo',e.value);
+        })
+
+        socket.on('joinsucess', function () {
+            socket.on('getframe', function (data) {
+                var image = new Image();
+                image.src=data;
+                image.onload = function () {
+                    stage.drawImage(image,0,0);
+                }
+            });
+        });
+        socket.on('joinerror', function () {
+            alert("空对象");
+        })
+    }
+    var stage=null;
+    var video=null;
+    var canvas =null;
+    var sendtype = 1;
+    window.addEventListener('DOMContentLoaded',function (){
+        video= document.querySelector('video');
+        canvas = document.querySelector("canvas");
+        stage = canvas.getContext("2d");
+    })
+</script>
+</body>
+</html>

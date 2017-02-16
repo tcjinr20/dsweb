@@ -1,0 +1,23 @@
+<div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" role="complementary">
+    <ul class="nav ds-sidenav">
+        <li><a href="/index/index?to=index">首页</a></li>
+        <li><a href="/index/index?to=sprite">Sprite</a></li>
+        <li><a href="/index/index?to=bitmapdata">BitmapData</a></li>
+        <li><a href="/index/index?to=mouseevent">MouseEvent</a></li>
+        <li><a href="/index/index?to=stage">Stage</a></li>
+        <li><a href="/index/index?to=movieclip">MovieClip</a></li>
+        <li><a href="/index/index?to=byte">Byte</a></li>
+        <% for(var i = 0;i<list.length;i++){%>
+        <li><a href="/user/article/read?id=<%=list[i]._id%>"><%=list[i].title%></a></li>
+        <%}%>
+    </ul>
+    <a class="back-to-top" href="#top">
+        返回顶部
+    </a>
+</div>
+<script>
+//$('.ds-sidenav a').click(function () {
+//    loadCon(this.href)
+//    return false
+//})
+</script>

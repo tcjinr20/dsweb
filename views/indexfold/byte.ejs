@@ -1,0 +1,35 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>ByteArray 类<small>ByteArray二进制储存,此类与flash的ByteArray是不一致的</small></h1>
+</div>
+<canvas id="can"></canvas>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+<script id="s">
+    function po(){
+        this.name = "polly";
+    }
+    $s.ready(function () {
+        var byte = new $s.dsByteArray();
+        byte.writeBoolean(1);
+        byte.writeFloat(1.567);
+        byte.writeObject([1,2,3]);
+        byte.writeObject(new po());
+        var len = byte.writeMultiByte("jkfds分公司的客户给");
+        byte.writeUTF('功夫大使馆 分公司的购房打算');//只能是一个16位
+        byte.writeShort(123);
+        byte.position =0;
+        console.log(byte.__data);
+        console.log(byte.readBoolean());
+        console.log(byte.readFloat());
+        console.log(byte.readObject());
+        console.log(byte.readObject());
+        console.log(byte.readMultiByte(len));
+        console.log(byte.readUTF());
+        console.log(byte.readShort());
+    })
+</script>
+<script>
+    insertSri('#s',"#d")
+</script>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%-include("./header")-%>
+</head>
+<body>
+<div>
+    <input type="button" value="流传播">
+    <input type="button" value="帧传播" onclick="sendbyframe()">
+    <input type="button" value="开始" onclick="begin()">
+    <input type="button" value="结束" onclick="stop()">
+    <input type="button" value="下载" onclick="loaddown()">
+</div>
+<div>
+    <video></video>
+</div>
+<div>
+    <canvas style="display: none"></canvas>
+</div>
+
+<script>
+    var stage=null;
+    var video=null;
+    var canvas =null;
+    var sendtype = 1;
+    window.addEventListener('DOMContentLoaded',function () {
+
+        video= document.querySelector('video');
+        navigator.getUserMedia= navigator.getUserMedia|| navigator.webkitGetUserMedia|| navigator.mozGetUserMedia|| navigator.msGetUserMedia;
+        window.URL= window.URL|| window.webkitURL|| window.mozURL|| window.msURL;
+        if(navigator.getUserMedia){
+            // Call the getUserMedia method here}else{
+            console.log('Native device media streaming (getUserMedia) not supported in this browser.');
+            // Display a friendly "sorry" message to the user.}
+        }
+        navigator.getUserMedia({video:true}, successCallback, errorCallback);
+        function successCallback(steam){
+            console.log(steam)
+            if(video.mozSrcObject !==undefined){
+                video.mozSrcObject = steam;
+            }else{
+                video.src=(window.URL && window.URL.createEventObject(steam)||steam)
+            }
+            video.play();
+            video.onloadedmetadata = function(e) {
+                console.log('load');
+                canvas.width= video.offsetWidth;
+                canvas.height =video.offsetHeight;
+            };
+
+            canvas = document.querySelector("canvas");
+            stage = canvas.getContext("2d");
+        }
+
+        function errorCallback(err){
+            console.log(err);
+        }
+    })
+    var socket;
+    function begin(){
+        socket = io.connect('/');
+        socket.on('connect',function(e){
+            socket.emit('bezhubo',socket.id);
+            video.ontimeupdate =function () {
+                stage.drawImage(video,0,0);
+                if(sendtype==1){
+                    sendbyframe();
+                }else{
+                    sendbysock();
+                }
+            }
+        });
+        socket.on("loadfile",function(url){
+            window.open(url);
+        })
+    }
+    function stop(){
+        video.ontimeupdate = null;
+        socket.emit('stoprecorde',socket.id);
+    }
+
+    function sendbysock(){
+        console.log("sock");
+    }
+    function sendbyframe(){
+        var jpeg = canvas.toDataURL("image/jpeg",1.0);
+        jpeg=jpeg.replace(/^data:image\/\w+;base64,/, "")
+        socket.emit('postframe', jpeg);
+    }
+
+    function loaddown(){
+        socket.emit('postframe', jpeg);
+    }
+</script>
+</body>
+</html>

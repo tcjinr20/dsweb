@@ -1,0 +1,64 @@
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    添加
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>文件</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0;i<list.length;i++){ %>
+        <tr>
+            <td><%=i%></td>
+            <td><%=list[i].name%></td>
+            <td><%=list[i].des%></td>
+            <td><%=list[i].des%></td>
+            <td>
+                <div class="btn-group">
+                    <a type="button" class="btn btn-warning" href="/user/cate/del?name=<%=list[i].name%>">删除</a>
+                    <button type="button" class="btn btn-info" data-toggle="button" aria-pressed="true" autocomplete="on">
+                        修改
+                    </button>
+                </div>
+            </td>
+        </tr>
+    <%}%>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加标签</h4>
+            </div>
+            <form role="form" action="/user/cate/add" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>名称</label>
+                        <input name="name" type="text" class="form-control" placeholder="名称">
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <input name="des" type="text" class="form-control" placeholder="描述">
+                    </div>
+                    <div class="form-group">
+                        <label>响应文件</label>
+                        <input name="act" type="text" class="form-control" placeholder="文件名">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <input type="submit" class="btn btn-primary" value="添加"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>bitmapdata 类<small>创建任意大小的透明或不透明位图图像，并在运行时采用多种方式操作这些图像</small></h1>
+</div>
+<canvas id="can"></canvas>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+<script id="s">
+$s.ready(function () {
+    var anle = new $s.dsSprite();
+    anle.graphics.lineStyle(1,Math.random()*0xffffff);
+    anle.graphics.beginFill(Math.random()*0xffffff,1)
+    anle.graphics.moveTo(10,10);
+    anle.graphics.lineTo(100,30);
+    anle.graphics.lineTo(80,140);
+//    this.addChild(anle);
+
+    var data = new $s.dsBitmapData(100,200);
+    var bit = $s.dsBitmap(data);
+    this.addChild(bit);
+    data.draw(anle);//绘制
+
+    var d1 = new $s.dsBitmapData(200,200);
+    d1.draw(bit);
+    d1.noise(200*200,0,900,1|2|8,true);//杂点
+    var bit1 = new $s.dsBitmap(d1);
+    bit1.x = 100;
+    this.addChild(bit1);
+
+    var perlinNoise = new $s.dsBitmapData(200,200);
+    perlinNoise.draw(bit)
+    perlinNoise.perlinNoise(10,10,2,200*200,true,true,1);//Perlin 杂点
+    var bit2 = new $s.dsBitmap(perlinNoise);
+    bit2.x = 200;
+    this.addChild(bit2);
+
+    var threshold = new $s.dsBitmapData(200,200,false,0xff00ff);
+    threshold.draw(bit);
+    //根据指定的阈值测试图像中的像素值，并将通过测试的像素设置为新的颜色值。
+    threshold.threshold(data,new $s.dsRectangle(10,10,100,100),new $s.dsPoint(10,10),"<",0xf00000ff,0x6cff0000ff,0xffffff,true);
+    var bit3 = new $s.dsBitmap(threshold);
+    bit3.x=300;
+    this.addChild(bit3);
+
+},{canvas:'#can',height:323})
+</script>
+<script>
+    insertSri('#s',"#d")
+</script>
+
