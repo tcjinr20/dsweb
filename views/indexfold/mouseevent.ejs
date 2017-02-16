@@ -1,0 +1,57 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>MouseEvent 类<small>鼠标事件,js默认的事件类型 是一种数值，但是这里使用字符串</small></h1>
+</div>
+<canvas id="can"></canvas>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+<script id="s">
+$s.ready(function () {
+    var s = new $s.dsSprite();
+    var t = new $s.dsTextField();
+    t.text='s';
+    s.addChild(t)
+    s.name = 's'
+    s.graphics.beginFill(0xffffff*Math.random(),1);
+    s.graphics.drawRect(0,0,100,200);
+    this.addChild(s)//由于支持多舞台的,所以必须先添加到舞台才能监听事件
+    s.addEventListener('click' ,onclick);
+
+    var ss = new $s.dsSprite();
+    var tt = new $s.dsTextField();
+    tt.text='ss';
+    ss.addChild(tt)
+    ss.name = 'ss';
+    ss.x = 100;
+    ss.graphics.beginFill(0xffffff*Math.random(),1);
+    ss.graphics.moveTo(0,0);
+    ss.graphics.lineTo(100,0);
+    ss.graphics.lineTo(50,100);
+//    ss.graphics.lineTo(0,0);
+    this.addChild(ss);
+    ss.addEventListener('click' ,onclick);
+
+    var sss = new $s.dsSprite();
+    var ttt = new $s.dsTextField();
+    ttt.text='sss';
+    sss.addChild(ttt)
+    sss.name = 'sss';
+    sss.y=sss.x = 100;
+    sss.graphics.beginFill(0xffffff*Math.random(),1);
+    sss.graphics.drawRect(0,0,100,50)
+    sss.rotation = 30;
+//    ss.graphics.lineTo(0,0);
+    this.addChild(sss);
+    sss.addEventListener('click' ,onclick);
+
+},{canvas:'#can',height:323})
+
+    function onclick(e) {
+        alert(this.name)
+    }
+    
+</script>
+<script>
+    insertSri('#s',"#d")
+</script>

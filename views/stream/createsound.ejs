@@ -1,0 +1,74 @@
+<html>
+<head>
+    <script src="/js/soundhttp.js"></script>
+</head>
+<body>
+<button >生成</button>
+<script>
+
+    soundhttp.getData('/viper.ogg');
+    soundhttp.sendback=function (param) {
+        var bg = soundhttp.buildSound({byte:param,len:param.length});
+        soundhttp.playSound(bg);
+    }
+//    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+//    var button = document.querySelector('button');
+//    var audiosource=null;
+//    var sourceoff =0;
+//    var leftchannel = null;
+//    var rightchannel = null;
+//    function getData() {
+//        var request = new XMLHttpRequest();
+//        request.open('GET', '/viper.ogg', true);
+//        request.responseType = 'arraybuffer';
+//        request.onload = function() {
+//            var audioData = request.response;
+//
+//            audioCtx.decodeAudioData(audioData, function(buffer) {
+//                    audiosource = buffer;
+//                    leftchannel = audiosource.getChannelData(0)
+//                },
+//
+//                function(e){"Error with decoding audio data" + e.err});
+//
+//        }
+//        request.send();
+//    }
+//    getData();
+//
+//    var channels = 2;
+//    var frameCount = audioCtx.sampleRate * 2.0;
+//    button.onclick = function() {
+//        if(!audiosource)return alert('没准备');
+//        if(sourceoff>=leftchannel.length)return;
+////        var myArrayBuffer = audioCtx.createBuffer(channels, frameCount, audioCtx.sampleRate);
+////        var nowBuffering = myArrayBuffer.getChannelData(0);
+////        for (var i = 0; i < frameCount; i++) {
+////            if (sourceoff >= leftchannel.length)break;
+////            nowBuffering[i] = leftchannel[sourceoff + i];
+////        }
+////        sourceoff +=frameCount;
+////        var anotherArray = new Float32Array;
+////        myArrayBuffer.copyFromChannel(anotherArray,0,0);
+////        myArrayBuffer.copyToChannel (anotherArray,1,0);
+//        var bag =soundhttp.splitbytr(leftchannel);
+//        soundhttp.sendbag(bag,function (pp) {
+//            var buffer = soundhttp.buildSound({byte:pp,len:leftchannel.length});
+//            soundhttp.playSound(buffer,audioCtx);
+//        })
+//
+////        soundhttp.playback=function () {
+////            arguments.callee.call();
+////            return true;
+////        }
+////        var source = audioCtx.createBufferSource();
+////        source.connect(audioCtx.destination);
+////        source.buffer = myArrayBuffer;
+////        source.start();
+////        source.onended = arguments.callee;
+//    }
+
+
+</script>
+</body>
+</html>

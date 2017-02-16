@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/log.js"></script>
+</head>
+<body>
+<div class="logpage container">
+    <% if(typeof message != 'undefined'){%>
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <strong><%=message%></strong>
+    </div>
+    <%}%>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal" action="/user/login/reg" role="form" id="regform" method="post">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">username</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="username" placeholder="username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="pass" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="repass" placeholder="rePassword">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="subbtn" type="submit" class="btn btn-default">Sign up</button>
+                        <a href="/user/login/log" type="button" class="btn btn-link">登录</a>
+                    </div>
+                </div>
+                <input type="hidden" name="reurl" value="/">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

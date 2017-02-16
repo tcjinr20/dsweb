@@ -1,0 +1,57 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>Stage 类<small>代表主绘图区,一个canvas 对应一个stage</small></h1>
+
+</div>
+<canvas id="can"></canvas>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+<script id="s">
+    var config ={
+        width:'100%',//字符串按canvas父对象的百分比算，可以不加%
+        height:323,
+        baseURI:'',//MovieClip的根目录
+        file:'json',//MovieClip的配置文件后缀
+        pre:'ds',//类型对象前缀，默认是ds,$s.dsSprite,如果设为空，只要$s.Sprite();
+        canvas:'#can'//canvas的id
+    };
+    var stage = null;
+    $s.ready(function () {
+        stage = this;//取得stage；
+        var quan = this.addChild(btn('全屏',0,0));
+        var fullsreen = false;
+        quan.addEventListener('click',function () {
+            stage.displayState('full_screen');
+            fullsreen =!fullsreen;
+        })
+        var clear = this.addChild(btn('重置舞台',100,0));
+        clear.addEventListener('click',function () {
+            stage.reset();//此方法彻底清除对象，包裹所有事件
+        })
+
+        this.color =0xffffff*Math.random();
+
+        this.frameRate = 60;//设置帧频，每秒的渲染次数。也影响ENTER_FRAME事件的频率
+
+    },config);
+
+    function btn(str,x,y){
+       var bb =  new $s.dsSprite();
+       bb.name = str;
+       bb.x = x;
+       bb.y = y;
+       bb.graphics.lineStyle(1);
+       bb.graphics.beginFill(0xffffff*Math.random())
+       bb.graphics.drawRect(0,0,70,30);
+       var t = new $s.dsTextField();
+       t.text = str;
+       bb.addChild(t);
+       return bb;
+    }
+
+
+</script>
+<script>
+    insertSri('#s',"#d")
+</script>

@@ -1,0 +1,23 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>目录</th>
+        <th>状态</th>
+        <th>开始时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0;i<list.length;i++){ %>
+    <tr id="<%=list[i].type %>">
+        <td><%=list[i].type %></td>
+        <td class="run"><%=list[i].running %></td>
+        <td><%=list[i].opentime %></td>
+        <td><div class="btn btn-default <%=list[i].type %>_start" >开始</div><div class="btn btn-default <%=list[i].type %>_stop">结束</div></td>
+    </tr>
+    <%}%>
+    </tbody>
+</table>
+<script>
+    spider()
+</script>

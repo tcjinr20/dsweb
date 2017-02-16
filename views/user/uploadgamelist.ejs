@@ -1,0 +1,31 @@
+<form role="form" method="post" action="/user/uploadgame/upload" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>游戏名称</label>
+        <input type="text"  required class="form-control" placeholder="游戏名称" name="gamename">
+    </div>
+    <div class="form-group">
+        <label>作者</label>
+        <input type="text"  required class="form-control" placeholder="作者" name="author">
+    </div>
+    <div class="form-group">
+        <label>游戏描述</label>
+        <textarea class="form-control" required placeholder="游戏描述" name="gamedes"></textarea>
+    </div>
+    <div class="form-group">
+
+            <label>启动html</label>
+            <input type="text" class="form-control" placeholder="index.html" name="mainhtml">
+
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" checked="checked" name="iframe"> 嵌套frame
+        </label>
+    </div>
+    <div class="form-group">
+        <input type="file" required name="imgFile" value="上传.zip文件">
+        <p class="help-block">游戏的压缩包并指定启动文件 zip压缩包</p>
+    </div>
+    <input type="submit" class="btn btn-default" value="submit"></input>
+    <input type="hidden" name="reurl" value="/user/uploadgame/upload">
+</form>

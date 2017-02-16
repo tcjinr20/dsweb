@@ -1,0 +1,30 @@
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="well text-center" id="drag">
+            <div class="btn">
+                <div>拖动到这里</div>
+                <span class="glyphicon glyphicon-plus " aria-hidden="true"></span>
+            </div>
+            <div id="info"></div>
+        </div>
+        <input type="submit" id="dsimg" class="btn btn-danger center-block" value="搜索">
+    </div>
+    <input type="file" id="selfile" style="display: none" accept="image/*">
+</div>
+<div >
+    <div class="row" id="temp">
+
+    </div>
+</div>
+<script id="templete">
+    <div class="col-xs-6 col-md-3">
+        <a href="#src" class="thumbnail">
+            <img  alt="100%x180" src="#src" style="height: 180px; width: 100%; display: block;"  data-holder-rendered="true">
+        </a>
+    </div>
+</script>
+<script>
+drag()
+
+</script>

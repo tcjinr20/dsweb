@@ -1,0 +1,37 @@
+<script charset="utf-8" src="/plug/kindeditor-min.js"></script>
+<script charset="utf-8" src="/plug/lang/zh_CN.js"></script>
+<script>
+    initExdit();
+    initUpload();
+</script>
+<form method="post" action="/user/article/exdit">
+    <div class="form-inline">
+        <label>标题</label>
+        <input type="text" class="form-control" placeholder="标题" name="title" value="<%=article.title %>">
+    </div>
+    <div class="form-inline">
+        <label>附件</label>
+        <input value="选择图片" type="button" class="form-control" id="image3" />
+        <input  class="form-control url3" disabled="disabled" type="text" value="<%=article.attament%>" />
+        <input type="hidden" class="url3" name="attament">
+    </div>
+    <div class="form-inline">
+        <label>分类</label>
+        <select class="form-control" name="cate">
+            <%for(var i = 0;i<cates.length;i++){%>
+            <option value="<%=cates[i]._id%>" <% if(cates[i]._id==article.cate){%> selected="selected" <%}%>> <%=cates[i].name%></option>
+            <%}%>
+        </select>
+    </div>
+    <div class="form-inline">
+        <textarea name="content" class="col-xs-12" style="visibility:hidden;min-height:400px;"><%=article.content %></textarea>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-9 col-sm-3">
+            <input type="submit" class="btn btn-default" value="更新"></input>
+        </div>
+    </div>
+    <input type="hidden" name="act" value="update">
+    <input type="hidden" name="id" value="<%=article._id %>">
+</form>

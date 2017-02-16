@@ -1,0 +1,28 @@
+<script src="/js/dscanvas-1.2.js"></script>
+<div class="page-header">
+    <h1>MovieClip 类<small>提供动画操作，这个是flash的MovieClip有明显差别</small></h1>
+</div>
+<div>
+MovieClip 图像的加载有两种方式，
+    1：png序列。每帧图片是一张独立的png图像。
+    2：sprite表。所有的帧只在一张图上。
+    都配有一张数据表，这里使用json后缀的文件;
+
+</div>
+<canvas id="can"></canvas>
+<a type="button" href="/movie/dupu.json" class="btn btn-link">dupu.json</a>
+<a type="button" class="btn btn-link" href="/movie/xiaobing.json">xiaobing.json</a>
+<pre class="prettyprint lang-js" id="d">
+
+</pre>
+<script id="s">
+$s.ready(function () {
+    var dupu = this.addChild(new $s.dsMovieClip()).load('dupu');
+    var xiao = this.addChild(new $s.dsMovieClip()).load('xiaobing');
+    xiao.x = 200
+},{canvas:"#can",height:323,baseURI:"/movie/"})
+//MovieClip文件在资源根目录下的movie,是baseURI 不是baseURL
+</script>
+<script>
+    insertSri('#s',"#d")
+</script>

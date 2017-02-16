@@ -1,0 +1,31 @@
+<div class="list-group">
+    <% for(var i = 0;i<list.length;i++){%>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">
+            <a href="/user/article/?href=read&id=<%=list[i]._id%>" >
+                <%=list[i].title%>
+            </a>
+        </h4>
+        <p class="list-group-item-text">
+            <%- list[i].content.substr(0,100)%>
+        </p>
+    </div>
+    <%}%>
+</div>
+<input type="hidden" id="page" value="<%=page %>">
+<input type="hidden" id="pages" value="<%=pages %>">
+<script src="/js/bootstrap-paginator.min.js"></script>
+<script>
+    var element = $('#navpage');
+    var options = {
+        currentPage: $("#page").val()||1,
+        numberOfPages: 1,
+        totalPages:$("#pages").val()||1
+    }
+    element.bootstrapPaginator(options);
+</script>
+<nav>
+    <ul class="pagination" id="navpage">
+
+    </ul>
+</nav>
