@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
+plugs/py/upload/
 build/
 develop-eggs/
 dist/
@@ -44,6 +44,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pyc
 
 # Translations
 *.mo
@@ -87,3 +88,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+.idea
+
+upload/
+public/
