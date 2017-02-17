@@ -43,7 +43,7 @@ class AnalysisByDB:
                 self.fileinfo.addK(info['name'], info)
                 self.monfile.insert_one(info)
 
-            self.netfile.delK(k)
+            # self.netfile.delK(k)
 
     def stop(self):
         self.status = 0
@@ -199,7 +199,7 @@ def dealfile(file):
         os.makedirs(copyfold)
 
     basename = os.path.basename(file).rsplit('.', 1)
-    localtime = str(time.time())
+    localtime = str((time.time()*1000).as_integer_ratio()[0])
     newfilename = localtime + '.' + basename[1]
     newfile = os.path.join(copyfold, newfilename)
     shutil.copy2(file, newfile)

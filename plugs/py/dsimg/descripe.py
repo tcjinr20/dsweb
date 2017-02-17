@@ -13,7 +13,7 @@ class Descripe:
             self.img = resize(file)
         else:
             self.img = file
-        self.img = cv2.resize(self.img, (8, 8))
+        # self.img = cv2.resize(self.img, (8, 8))
         self.level = level
         self.bins = (8, 12, 3)
 
@@ -27,9 +27,7 @@ class Descripe:
         return features
 
     def colorInfo(self):
-        # self.img = cv2.pyrDown(self.img)
         hsv = cv2.cvtColor(self.img, cv2.COLOR_BGR2HSV)
-
         features = []
         masks = self.slices(hsv)
         # for m in masks:
@@ -113,6 +111,7 @@ def homodist(m, n, eps=1e-10):
 
 def resize(file):
     img = cv2.imread(file)
+
     h, w = img.shape[:2]
     mm = max(h, w)
     if mm>256:
