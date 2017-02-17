@@ -1,27 +1,33 @@
 #!/usr/bin/env python
 # coding:utf-8
 
-import shutil
 import time
-import urllib
 from glob import glob
-import cv2
 from monodb import conn
 import descripe as desc
-import dssetting as config
+import setting as config
 import functions as fun
 from descripe import *
 from spy.redisdb import DBhash
 import shutil
 
 class AnalysisByDB:
-    count = 0
+    count = 1
+    '''抓取的全部图片'''
     netfile = DBhash('netfile')
+    '''临时记录每张图片的指纹，在分类时删除'''
     classing = DBhash("dsimg:classing")
+    '''记录所有合格的图片数据'''
     fileinfo = DBhash("dsimg:fileinfo")
-    files = conn.blog.fileinfotable
-    claes = conn.blog.classfytable
+    monfile = conn.blog.fileinfotable
     status = 1
+
+    def start(self):
+        while self.count != 0 and self.status == 1:
+            self.run()
+
+        Classfy().run()
+        self.stop()
 
     def run(self):
         fp = self.netfile.getPart(self.count)
@@ -35,14 +41,9 @@ class AnalysisByDB:
                 info['url'] = v
                 self.classing.addK(info['name'], info['identity'])
                 self.fileinfo.addK(info['name'], info)
-            self.netfile.delK(k)
+                self.monfile.insert_one(info)
 
-        if self.count != 0 and self.status == 1:
-            return self.run()
-        else:
-            """完成指纹提取，进入指纹分类"""
-            Classfy().run()
-            self.stop()
+            self.netfile.delK(k)
 
     def stop(self):
         self.status = 0
@@ -77,17 +78,18 @@ class AnalysisByFold:
         print 'stop'
         self.status = 0
 
-
+'''分类'''
 class Classfy:
     status = 0
     fileinfo = DBhash("dsimg:fileinfo")
+    """最终的分类结果"""
+    classfy = DBhash('dsimg:classfy')
+    """待分类临时数据"""
+    classing = DBhash('dsimg:classing')
+    monfile = conn.blog.fileinfotable
+    clafy = conn.blog.classfytable
 
-    def __init__(self):
-        """分类结果"""
-        self.classfy = DBhash('dsimg:classfy')
-        """待分类临时数据"""
-        self.classing = DBhash('dsimg:classing')
-
+    '''单文件分类，找到分类返回None, 没有找到返回元数据'''
     def loop(self, clas, ik):
         ikv = eval(self.classing.getK(ik))
         self.classing.delK(ik)
@@ -99,7 +101,11 @@ class Classfy:
                 if info.has_key('classfy') is False:
                     info['classfy'] = []
                 info['classfy'].append(ic)
-                self.fileinfo.addK(ik, info)
+                if self.fileinfo.addK(ik, info) ==1:
+                    self.monfile.insert(info)
+                else:
+                    self.monfile.find_and_modify({'name':ik}, {'$push': {'classfy':ic}})
+
                 return None, None
         return ik, ikv
 
@@ -110,7 +116,9 @@ class Classfy:
         while len(ides) > 0:
             ik, ikv = self.loop(clas, ides.pop(0))
             if ik:
-                self.classfy.addK(ik, ikv)
+                if self.classfy.addK(ik, ikv) == 1:
+                    self.clafy.insert({'classfy':ik,'identity':ikv})
+                    self.monfile.find_and_modify({'name': ik}, {'$push': {'classfy': ik}})
                 clas.append(ik)
 
     def stop(self):
@@ -148,7 +156,6 @@ class Search:
         rback = []
         count = 0
         for fd in self.file.find({'classfy': {'$all':[cla]}}):
-            print fd
             dis = homodist(tar, fd['identity'])
             if dis < config.homodis:
                 rback.append((dis, fd))
@@ -167,37 +174,42 @@ class Search:
                 nor = uu['identity']
                 dis = homodist(nor, tar)
                 if dis < config.homodis:
-                    result[dis] = uu['key']
+                    result[dis] = uu['classfy']
             page += 1
         return result
 
     def stop(self):
         self.status = 0
 
-
+'''分析图片并生成图片数据'''
 def dealfile(file):
     img = cv2.imread(file)
     if img is None:
         return None
     mh, mw = img.shape[:2]
+    '''过滤小图片'''
     if mh < config.imgw or mw < config.imgw:
         return None
+
     # 移动文件
+    mdate = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+    urlfold = os.path.join(config.urlfold, mdate)
+    copyfold = os.path.join(config.copyfold, urlfold)
+    if os.path.exists(copyfold) is False:
+        os.makedirs(copyfold)
+
     basename = os.path.basename(file).rsplit('.', 1)
-    rname = str(time.time())
-    newf = rname + '.' + basename[1]
-    newf = os.path.join(config.copypath, newf)
-    shutil.copy2(file, newf)
-    os.remove(file)
-    des = desc.Descripe(newf, 2)
-    # 生成指纹
-    # self.identify.addK(basename[0], des.colorInfo())
-    # 生成文件信息
+    localtime = str(time.time())
+    newfilename = localtime + '.' + basename[1]
+    newfile = os.path.join(copyfold, newfilename)
+    shutil.copy2(file, newfile)
+    # os.remove(file)
+    des = desc.Descripe(img, 2)
     fle = {}
-    fle['size'] = os.path.getsize(newf)
+    fle['size'] = img.size
     fle['type'] = basename[1]
-    fle['name'] = rname
-    fle['loc'] = newf
-    fle['width'], fle['height'] =mw,mh
-    fle['identity'] = des.colorInfo()
+    fle['name'] = localtime
+    fle['loc'] = os.path.join(urlfold, newfilename)
+    fle['width'], fle['height'] =mw, mh
+    fle['identity'] =eval(str(des.colorInfo()))
     return fle

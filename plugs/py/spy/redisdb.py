@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 import redis
-from dssetting import redisdb as config
+from setting import redisdb as config
 
 db = redis.StrictRedis(host=config['host'], port=config['port'], password=config['password'])
 
@@ -41,7 +41,10 @@ class DBset:
 class DBhash:
     def __init__(self, name):
         self.name = name
-
+    '''
+    如果 field 是哈希表中的一个新建域，并且值设置成功，返回 1 。
+    如果哈希表中域 field 已经存在且旧值已被新值覆盖，返回 0 。
+'''
     def addK(self, key, value):
         return db.hset(self.name, **{'key': key, 'value': value})
 

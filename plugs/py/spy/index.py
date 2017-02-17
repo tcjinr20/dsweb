@@ -10,9 +10,6 @@ import sys
 sys.setrecursionlimit(1000000)
 
 if __name__ == "__main__":
-    # opt, arg = getopt(sys.argv[1:],'d:')
-    # opt =dict(opt)
-    # domain = opt.get('-d')
 
     def check():
         sta = status.find({'type': 'spy'}).next()
@@ -23,7 +20,7 @@ if __name__ == "__main__":
     threading.Timer(2, check).start()
 
     en = dsEngine()
-    en.add(dsImg('www.duitang.com'))
+    en.add(dsImg('www.rarbt.com/'))
     en.start()
 
 

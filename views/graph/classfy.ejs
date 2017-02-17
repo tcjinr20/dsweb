@@ -1,3 +1,4 @@
+
 <%- include('../public/header') -%>
 <div class="row">
     <div class="col-xs-9" >
@@ -15,7 +16,15 @@
             <input type="file" id="selfile" style="display: none" accept="image/*">
         </div>
         <div id="content">
-
+            <div class="row" id="temp">
+                <% for(var i = 0;i<list.length;i++){%>
+                <div class="col-xs-6 col-md-3">
+                    <a href="index/classfy?id=<%=list[i].name%>" class="thumbnail">
+                        <img  alt="100%x180" src="/<%=list[i].loc%>"  data-holder-rendered="true">
+                    </a>
+                </div>
+                <%}%>
+            </div>
         </div>
         <script>
             drag()
@@ -25,7 +34,4 @@
 
     </div>
 </div>
-<script>
-    loadCon('index/list');
-</script>
 <%- include('../public/footer') -%>

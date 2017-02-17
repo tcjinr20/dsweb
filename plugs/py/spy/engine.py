@@ -12,8 +12,8 @@ class dsEngine:
         while self.status != 0:
             self._run()
 
-        for d in self.dss:
-            d.exit()
+        # for d in self.dss:
+        #     d.exit()
         self.exit()
 
     def _run(self):

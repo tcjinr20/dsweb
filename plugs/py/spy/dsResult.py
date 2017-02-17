@@ -5,7 +5,7 @@ from redisdb import DBlist, DBset, DBhash
 import time, os, threading
 import os.path as path
 import urllib
-import dssetting as config
+import setting as config
 import functions as fun
 
 

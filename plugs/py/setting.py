@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 # coding:utf-8
 import os.path as path
+
 """图片的相似度的汉明距离"""
 homodis = 1.5
 
 """蜘蛛下载图片的临时位置"""
 download = path.realpath('upload/spy')
 
+"""图片url地址"""
+urlfold = 'upload'
+
 """图片最终放置位置"""
-copypath = 'upload'
+copyfold = 'public'
+
 """图片缩放大小"""
 imgw = 256
+
 """查找限制"""
 limit = 2000
 

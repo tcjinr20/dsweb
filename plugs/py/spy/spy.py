@@ -12,7 +12,8 @@ class dsImg:
 
     def __init__(self, dm, pro='http://'):
         if dm.startswith('http'):
-            raise FutureWarning
+            raise
+
         self.domain = dm
         self.protocol = pro
         self.db = dsRequest(self)

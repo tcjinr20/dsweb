@@ -9,7 +9,10 @@ import numpy as np
 #颜色描述
 class Descripe:
     def __init__(self,file, level):
-        self.img = resize(file)
+        if type(file) is str:
+            self.img = resize(file)
+        else:
+            self.img = file
         self.img = cv2.resize(self.img, (8, 8))
         self.level = level
         self.bins = (8, 12, 3)

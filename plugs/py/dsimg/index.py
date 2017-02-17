@@ -7,15 +7,13 @@ from getopt import getopt
 from analysis import AnalysisByDB, AnalysisByFold, Classfy
 from monodb import status
 import threading
-import sys
-"""递归限制解除"""
-sys.setrecursionlimit(1000000)
 
 def check():
     if app and app.status == 0:
-        status.update({'status': 'analysis'}, {'$set': {'running': 0}})
+        status.update({'type': 'analysis'}, {'$set': {'running': 0}})
+        print 'close'
         return
-    sta = status.find({'status': 'analysis'}).next()
+    sta = status.find({'type': 'analysis'}).next()
     if sta['running'] == 0:
         if app:
             app.stop()
@@ -23,7 +21,7 @@ def check():
     threading.Timer(2, check).start()
 
 if __name__ == '__main__':
-    opt, arg = getopt(sys.argv[1:], 'sdf:')
+    opt, arg = getopt(sys.argv[1:], 'sdf:',['savepath'])
     opt = dict(opt)
 
     threading.Timer(2, check).start()
@@ -34,12 +32,12 @@ if __name__ == '__main__':
         app.run()
     elif opt.get('-d') is not None:
         app = AnalysisByDB()
-        app.run()
+        app.start()
     elif opt.get('-f') is not None:
         path = os.path
         pp = path.join(opt.get('-f'))
         app = AnalysisByFold()
-        app.run(pp)
+        # app.run(pp)
     else:
         print "wrong argreents"
 
