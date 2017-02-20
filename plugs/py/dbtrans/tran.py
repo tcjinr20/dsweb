@@ -2,7 +2,7 @@
 # coding:utf-8
 
 from monodb import conn
-from spy.redisdb import DBhash
+from redisdb import DBhash
 
 class RedisToMongo:
 

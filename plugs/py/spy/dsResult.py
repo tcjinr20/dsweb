@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # coding:utf-8
 
-from redisdb import DBlist, DBset, DBhash
-import time, os, threading
+import os
 import os.path as path
+import threading
+import time
 import urllib
-import setting as config
+
 import functions as fun
+import setting as config
+from redisdb import DBset, DBhash
 
 
 class dsRes:
@@ -33,16 +36,18 @@ class dsRes:
             if self.imgs.addK(m) == 1:
                 mms.append(m)
 
-        DownThread(mms).run()
+        DownThread(mms,item.url).run()
 
         return item
 
 
 class DownThread(threading.Thread):
-    def __init__(self, arg):
+    def __init__(self, arg,url):
         super(DownThread, self).__init__()  # 注意：一定要显式的调用父类的初始化函数。
         self.arg = arg
+        self.url = url
         self.netfile = DBhash('netfile')
+        self.urlfile = DBhash('urlfile')
         self.fold = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self.downloadfold = ff = path.join(config.download, self.fold)
         if not path.exists(ff):
@@ -57,5 +62,6 @@ class DownThread(threading.Thread):
                 except:
                     continue
                 self.netfile.addK(pp, m)
+                self.urlfile.addK(pp,self.url)
 
 

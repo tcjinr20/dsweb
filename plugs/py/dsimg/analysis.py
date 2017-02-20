@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+import shutil
 import time
 from glob import glob
-from monodb import conn
+
 import descripe as desc
-import setting as config
 import functions as fun
+import setting as config
 from descripe import *
-from spy.redisdb import DBhash
-import shutil
+from monodb import conn
+from redisdb import DBhash
+
 
 class AnalysisByDB:
     count = 1
@@ -19,7 +21,12 @@ class AnalysisByDB:
     classing = DBhash("dsimg:classing")
     '''记录所有合格的图片数据'''
     fileinfo = DBhash("dsimg:fileinfo")
+    '''图片来源'''
+    urlfile = DBhash('urlfile')
+    '''mongo的图片信息'''
     monfile = conn.blog.fileinfotable
+    '''每张图片的指纹（指纹有多种）'''
+    identity = conn.blog.identitytable
     status = 1
 
     def start(self):
@@ -39,11 +46,15 @@ class AnalysisByDB:
             info = dealfile(k)
             if info:
                 info['url'] = v
+                info['sourceurl']=self.urlfile.getK(k)
                 self.classing.addK(info['name'], info['identity'])
+                self.identity.insert_one({'f': info['name'], 'c': info['identity']})
+                del info['identity']
                 self.fileinfo.addK(info['name'], info)
                 self.monfile.insert_one(info)
-
             # self.netfile.delK(k)
+            #self.urlfile.delK(k)
+
 
     def stop(self):
         self.status = 0
@@ -81,6 +92,7 @@ class AnalysisByFold:
 '''分类'''
 class Classfy:
     status = 0
+    # netfileinfo = DBhash()
     fileinfo = DBhash("dsimg:fileinfo")
     """最终的分类结果"""
     classfy = DBhash('dsimg:classfy')
@@ -126,12 +138,14 @@ class Classfy:
 
 
 class Search:
-
+    '''颜色c,形状s,布局g 对应identity字段'''
+    checkfun = ('c', 's', 'g')
     status = 0
 
     def __init__(self, le):
         self.level = le
-        self.file = conn.blog.fileinfotable
+        # self.file = conn.blog.fileinfotable
+        self.identity = conn.blog.identitytable
         self.clafy = conn.blog.classfytable
 
     def search(self, qimg, limit=10):
@@ -152,16 +166,19 @@ class Search:
         """url 中可能包含汉字所以返回unicode字符串"""
         return rrback
 
-    def findSmilar(self, tar, cla):
+    def findSmilar(self, tar, cla, check=0):
         rback = []
         count = 0
+
         for fd in self.file.find({'classfy': {'$all':[cla]}}):
-            dis = homodist(tar, fd['identity'])
-            if dis < config.homodis:
-                rback.append((dis, fd))
-            count += 1
-            if count > config.limit:
-                break
+            rs = self.identity.find_one({'f': fd['name']})
+            if rs is not None:
+                dis = homodist(tar, rs[self.checkfun[check]])
+                if dis < config.homodis:
+                    rback.append((dis, fd))
+                count += 1
+                if count > config.limit:
+                    break
         return rback
 
     def findCla(self, tar, pg=0, limit=1000):
