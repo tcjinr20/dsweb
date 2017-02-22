@@ -20,14 +20,15 @@ proto.index = function(param) {
 }
 
 proto.list =function (param) {
-    model.pagelist(1,function (err,info) {
+    page = param.get['page']||1
+    model.pagelist(page,function (err,info) {
         if(info){
             keys = []
             for(var i = 0; i<info.list.length;i++){
                 keys.push(info.list[i]['classfy'])
             }
             fmodel.match(keys,function (result) {
-                res.render('./graph/list',{'list':result,len:info.len})
+                res.render('./graph/list',{'list':result,allp:info.len,'curp':page})
             })
         }
     })

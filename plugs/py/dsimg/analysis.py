@@ -52,8 +52,8 @@ class AnalysisByDB:
                 del info['identity']
                 self.fileinfo.addK(info['name'], info)
                 self.monfile.insert_one(info)
-            # self.netfile.delK(k)
-            #self.urlfile.delK(k)
+            self.netfile.delK(k)
+            self.urlfile.delK(k)
 
 
     def stop(self):

@@ -20,7 +20,7 @@ if __name__ == "__main__":
     threading.Timer(2, check).start()
 
     en = dsEngine()
-    en.add(dsImg('www.rarbt.com/'))
+    en.add(dsImg('www.bttiantangs.com'))
     en.start()
 
 

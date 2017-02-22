@@ -56,7 +56,7 @@ class DownThread(threading.Thread):
     def run(self):
         for m in self.arg:
             if fun.isImage(m):
-                pp = path.realpath(path.join(self.downloadfold, path.basename(m)))
+                pp = path.join(self.downloadfold, path.basename(m))
                 try:
                     urllib.urlretrieve(m, pp)
                 except:

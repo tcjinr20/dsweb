@@ -6,7 +6,7 @@ import os.path as path
 homodis = 1.5
 
 """蜘蛛下载图片的临时位置"""
-download = path.realpath('upload/spy')
+download = 'upload/spy'
 
 """图片url地址"""
 urlfold = 'upload'
