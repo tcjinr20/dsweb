@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2017/2/16.
  */
+
 var GLOBAL = require('thinkmv').global;
 var db = null;
 GLOBAL.db.getDBByTable('classfytable',function(err,table){
@@ -14,9 +15,16 @@ proto.pagelist = function (page,callback) {
     getlist({},{'identity':0 },{limit: pn, skip:((page-1)*pn)},callback)
 }
 
+proto.random = function (num,callback) {
+   db.count(function (err,len) {
+       var sk = Math.floor(Math.random()*(len-num));
+       getlist({},{'identity':0 },{limit: num, skip:sk},callback)
+   })
+}
 
-function getlist(query,where,app,callback) {
-    db.find(query,where,app,function (err, cursor) {
+
+function getlist(query,where,limit,callback) {
+    db.find(query,where,limit,function (err, cursor) {
         if (err &&!cursor) {
             callback(err,null);
             return

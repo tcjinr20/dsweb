@@ -6,7 +6,6 @@ model = GLOBAL.M('classfy')
 fmodel = GLOBAL.M('fileinfo')
 var PLUG = GLOBAL.P()
 
-
 var req ,res,next;
 var proto = {};
 
@@ -19,8 +18,26 @@ proto.index = function(param) {
     res.render('./graph/index')
 }
 
+proto.more = function () {
+    res.render('./graph/more')
+}
+
+proto.random = function () {
+    model.random(12,function (err,info) {
+        if(info){
+            keys = []
+            for(var i = 0; i<info.list.length;i++){
+                keys.push(info.list[i]['classfy'])
+            }
+            fmodel.match(keys,function (result) {
+                res.render('./graph/random',{'list':result})
+            })
+        }
+    });
+}
+
 proto.list =function (param) {
-    page = param.get['page']||1
+    page = param.get['page']||1;
     model.pagelist(page,function (err,info) {
         if(info){
             keys = []

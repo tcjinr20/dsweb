@@ -14,22 +14,20 @@
             </div>
             <input type="file" id="selfile" style="display: none" accept="image/*">
         </div>
+        <ol class="breadcrumb">
+            <a href="/index/more" class="left">更多 <span class="badge">42</span></a>
+        </ol>
+
         <div id="content">
 
         </div>
-        <script>
-            drag()
-        </script>
     </div>
     <div class="col-xs-3">
 
     </div>
 </div>
-<div style="text-align: center">
-    <div id="navpage">
-    </div>
-</div>
 <script>
-    loadCon('index/list');
+    drag()
+    loadCon('index/random');
 </script>
 <%- include('../public/footer') -%>
