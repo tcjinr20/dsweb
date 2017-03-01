@@ -21,7 +21,7 @@ def check():
     threading.Timer(2, check).start()
 
 if __name__ == '__main__':
-    opt, arg = getopt(sys.argv[1:], 'sdf:',['savepath'])
+    opt, arg = getopt(sys.argv[1:], 'sdf:',['savepath','domain'])
     opt = dict(opt)
 
     threading.Timer(2, check).start()

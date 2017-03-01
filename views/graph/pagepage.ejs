@@ -1,0 +1,16 @@
+<% for(var i = 0;i<list.length;i++){%><div class="col-xs-6 col-md-3">
+    <div class="bray">
+        <a href="/<%=list[i].loc%>">
+            <i class="icon-bullhorn"></i>
+        </a>
+        <a href="<%=list[i].sourceurl%>">
+            <i class="icon-flag"></i>
+        </a>
+    </div>
+    <div class="thumbnail">
+        <img  alt="来自dsimg" src="/<%=list[i].loc%>" data-holder-rendered="true">
+        <div class="btn firbtn" data-id="<%=list[i]._id%>">
+            <i class="icon-fire"></i>
+        </div>
+    </div>
+</div><%}%>

@@ -6,6 +6,7 @@ from spy import dsImg
 import threading
 from monodb import status
 import sys
+import multiprocessing
 """递归限制解除"""
 sys.setrecursionlimit(1000000)
 

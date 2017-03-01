@@ -13,16 +13,20 @@ proto=module.exports={};
 proto.match = function (list,callback) {
     // console.log(list)
     db.find({'name':{'$in':list}},{'_id':0},function (err,cursor) {
-        cursor.toArray(function (err,info) {
-            callback(info)
-        })
+        cursor.toArray(callback)
     })
 }
 
 proto.findclass = function (cla,callback) {
     db.find({'classfy':cla},function (err,cursor) {
-        cursor.toArray(function (err,info) {
-            callback(err,info)
-        })
+        cursor.toArray(callback)
+    })
+}
+
+proto.page= function (page,callback) {
+    page = page?page-1:0;
+    ps = 12;
+    db.find({},{limit: ps, skip:page*ps},function (err,cursor) {
+        cursor.toArray(callback)
     })
 }

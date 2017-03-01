@@ -18,25 +18,31 @@ proto.index = function(param) {
     res.render('./graph/index')
 }
 
-proto.more = function () {
-    res.render('./graph/more')
+proto.class = function () {
+    res.render('./graph/class')
 }
 
-proto.random = function () {
-    model.random(12,function (err,info) {
+proto.classlist =function (param) {
+    page = param.get['page']||1;
+    model.pagelist(page,function (err,info) {
+
         if(info){
             keys = []
             for(var i = 0; i<info.list.length;i++){
                 keys.push(info.list[i]['classfy'])
             }
-            fmodel.match(keys,function (result) {
-                res.render('./graph/random',{'list':result})
+            fmodel.match(keys,function (err,result) {
+                if(err){
+                    res.send('wrong')
+                }else{
+                    res.render('./graph/classlist',{'list':result,'curp':page})
+                }
             })
         }
-    });
+    })
 }
 
-proto.list =function (param) {
+proto.classpage = function (param) {
     page = param.get['page']||1;
     model.pagelist(page,function (err,info) {
         if(info){
@@ -44,13 +50,56 @@ proto.list =function (param) {
             for(var i = 0; i<info.list.length;i++){
                 keys.push(info.list[i]['classfy'])
             }
-            fmodel.match(keys,function (result) {
-                res.render('./graph/list',{'list':result,allp:info.len,'curp':page})
+            fmodel.match(keys,function (err,result) {
+                if(err){
+                    res.send('wrong')
+                }else{
+                    res.render('./graph/classpage',{'list':result})
+                }
             })
         }
     })
-
 }
+
+proto.page = function () {
+    res.render('./graph/page');
+}
+
+proto.pagelist = function (param) {
+    if(param.get){
+        var page = param.get.page||1;
+        fmodel.page(page,function (err,resu) {
+            res.render('./graph/pagelist',{'list':resu,'curp':page})
+        })
+    }
+}
+proto.pagepage = function (param) {
+    if(param.get){
+        var page = param.get.page||1;
+        fmodel.page(page,function (err,resu) {
+            res.render('./graph/pagepage',{'list':resu,'curp':page})
+        })
+    }
+}
+
+proto.random = function () {
+    model.random(GLOBAL.page12,function (err,info) {
+        if(info){
+            keys = []
+            for(var i = 0; i<info.list.length;i++){
+                keys.push(info.list[i]['classfy'])
+            }
+            fmodel.match(keys,function (err,result) {
+                if(err){
+                    res.send('wrong')
+                }else{
+                    res.render('./graph/random',{'list':result})
+                }
+            })
+        }
+    });
+}
+
 
 proto.serach = function () {
     GLOBAL.upload(function (path,other) {

@@ -1,0 +1,10 @@
+<div class="row" id="temp">
+    <%- include('pagepage') -%>
+</div>
+<button type="button" id="moreid" class="btn btn-danger btn-lg btn-block" data-page="<%=curp%>>">more</button>
+<script>
+    openfire()
+    $('#temp').imgflash(function (mas) {
+        clickmore('/index/pagepage',mas)
+    });
+</script>

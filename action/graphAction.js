@@ -19,10 +19,6 @@ proto.index = function(param) {
     res.render('./graph/index')
 }
 
-proto.test = function () {
-    res.render('./graph/test')
-}
-
 proto.list =function (param) {
     res.render('./graph/list')
 }
@@ -35,4 +31,6 @@ proto.serach = function () {
         })
     })
 }
+
+
 

@@ -11,14 +11,17 @@ GLOBAL.db.getDBByTable('classfytable',function(err,table){
 proto=module.exports={};
 
 proto.pagelist = function (page,callback) {
-    var pn = 12;
+    var pn = GLOBAL.page12;
     getlist({},{'identity':0 },{limit: pn, skip:((page-1)*pn)},callback)
 }
 
 proto.random = function (num,callback) {
    db.count(function (err,len) {
        var sk = Math.floor(Math.random()*(len-num));
-       getlist({},{'identity':0 },{limit: num, skip:sk},callback)
+       getlist({},{'identity':0 },{limit: num, skip:sk},function (err,resu) {
+           if(resu)resu.counts = len;
+           callback(err,resu)
+       })
    })
 }
 
