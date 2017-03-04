@@ -44,6 +44,8 @@ class dsRes:
 def loadfun(url,purl,db):
     fold = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     downloadfold = ff = path.join(config.download, fold)
+    if not path.exists(ff):
+        os.makedirs(ff)
     if fun.isImage(url):
         pp = path.join(downloadfold, path.basename(url))
         try:
