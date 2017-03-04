@@ -11,7 +11,6 @@ class dsParse:
         if item.status == 0:
             return item
         page = etree.HTML(item.body)
-
         hrefs = page.xpath(u"//a")
         hs = set()
         oh = set()

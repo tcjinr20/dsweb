@@ -11,13 +11,9 @@ class dsNet:
     def load(self, item):
         try:
             f = urllib2.urlopen(item.url)
-        except Exception, e :
-            print item.url , Exception,e
+        except Exception, e:
+            print item.url, Exception, e
             item.status = 0
             return item
-        # print f.getcode()
-        # print f.info()
-        # print f.geturl()
-        # print f.read()
         item.body = f.read()
         return item

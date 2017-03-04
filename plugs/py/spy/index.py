@@ -2,13 +2,9 @@
 # coding:utf-8
 
 from engine import dsEngine
-from spy import dsImg
+from spy import dsSpy
 import threading
 from monodb import status
-import sys
-import multiprocessing
-"""递归限制解除"""
-sys.setrecursionlimit(1000000)
 
 if __name__ == "__main__":
 
@@ -21,7 +17,7 @@ if __name__ == "__main__":
     threading.Timer(2, check).start()
 
     en = dsEngine()
-    en.add(dsImg('www.bttiantangs.com'))
+    en.add('www.bttiantangs.com')
     en.start()
 
 
