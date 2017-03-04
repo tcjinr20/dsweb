@@ -16,7 +16,6 @@ proto.pagelist = function (page,callback) {
 }
 
 proto.random = function (num,callback) {
-
    db.count(function (err,len) {
        if(len){
            var sk = Math.floor(Math.random()*(len-num));
