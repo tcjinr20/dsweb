@@ -40,10 +40,12 @@ class dsRes:
         # DownThread(mms,item.url).run()
         return item
 
-
+netfile = DBhash('netfile')
+urlfile = DBhash('urlfile')
 def loadfun(url,purl,db):
     fold = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     downloadfold = ff = path.join(config.download, fold)
+
     if not path.exists(ff):
         os.makedirs(ff)
     if fun.isImage(url):
@@ -54,8 +56,8 @@ def loadfun(url,purl,db):
             db.imgs.removeK([url])
             return
 
-        db.netfile.addK(pp, url)
-        db.urlfile.addK(pp, purl)
+        netfile.addK(pp, url)
+        urlfile.addK(pp, purl)
     pass
 
 class DownThread(threading.Thread):
