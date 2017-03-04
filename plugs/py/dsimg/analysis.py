@@ -12,32 +12,39 @@ from descripe import *
 from monodb import conn
 from redisdb import DBhash
 
+'''抓取的全部图片'''
+netfile = DBhash('netfile')
+'''临时记录每张图片的指纹，在分类时删除'''
+classing = DBhash("dsimg:classing")
+'''记录所有合格的图片数据'''
+fileinfo = DBhash("dsimg:fileinfo")
+'''图片来源'''
+urlfile = DBhash('urlfile')
+'''备份'''
+backup = DBhash('backup')
+"""最终的分类结果"""
+classfy = DBhash('dsimg:classfy')
+
+clafy = conn.blog.classfytable
+'''mongo的图片信息'''
+monfile = conn.blog.fileinfotable
+'''每张图片的指纹（指纹有多种）'''
+identity = conn.blog.identitytable
+
 
 class AnalysisByDB:
-    count = 1
-    '''抓取的全部图片'''
-    netfile = DBhash('netfile')
-    '''临时记录每张图片的指纹，在分类时删除'''
-    classing = DBhash("dsimg:classing")
-    '''记录所有合格的图片数据'''
-    fileinfo = DBhash("dsimg:fileinfo")
-    '''图片来源'''
-    urlfile = DBhash('urlfile')
-    '''mongo的图片信息'''
-    monfile = conn.blog.fileinfotable
-    '''每张图片的指纹（指纹有多种）'''
-    identity = conn.blog.identitytable
+    count = 0
     status = 1
 
     def start(self):
+        self.run()
         while self.count != 0 and self.status == 1:
             self.run()
-
         Classfy().run()
         self.stop()
 
     def run(self):
-        fp = self.netfile.getPart(self.count)
+        fp = netfile.getPart(self.count)
         self.count = fp[0]
         self.checkfeture(fp[1])
 
@@ -46,15 +53,15 @@ class AnalysisByDB:
             info = dealfile(k)
             if info:
                 info['url'] = v
-                info['sourceurl']=self.urlfile.getK(k)
-                self.classing.addK(info['name'], info['identity'])
-                self.identity.insert_one({'f': info['name'], 'c': info['identity']})
+                info['sourceurl']=urlfile.getK(k)
+                classing.addK(info['name'], info['identity'])
+                identity.insert_one({'f': info['name'], 'c': info['identity']})
                 del info['identity']
-                self.fileinfo.addK(info['name'], info)
-                self.monfile.insert_one(info)
-            self.netfile.delK(k)
-            self.urlfile.delK(k)
-
+                fileinfo.addK(info['name'], info)
+                monfile.insert_one(info)
+            backup.addK(netfile.getK(k),urlfile.getK(k))
+            netfile.delK(k)
+            urlfile.delK(k)
 
     def stop(self):
         self.status = 0
@@ -62,8 +69,6 @@ class AnalysisByDB:
 
 class AnalysisByFold:
     status = 1
-    classing = DBhash("dsimg:classing")
-    fileinfo = DBhash("dsimg:fileinfo")
 
     def run(self, fold):
         if not os.path.isdir(fold):
@@ -81,7 +86,7 @@ class AnalysisByFold:
             if fun.isImage(fie):
                 info = dealfile(fie)
                 if info:
-                    self.fileinfo.addK(info['loc'], info)
+                    fileinfo.addK(info['loc'], info)
         Classfy().run()
         self.stop()
 
@@ -89,48 +94,40 @@ class AnalysisByFold:
         print 'stop'
         self.status = 0
 
-'''分类'''
+
 class Classfy:
     status = 0
-    # netfileinfo = DBhash()
-    fileinfo = DBhash("dsimg:fileinfo")
-    """最终的分类结果"""
-    classfy = DBhash('dsimg:classfy')
-    """待分类临时数据"""
-    classing = DBhash('dsimg:classing')
-    monfile = conn.blog.fileinfotable
-    clafy = conn.blog.classfytable
 
     '''单文件分类，找到分类返回None, 没有找到返回元数据'''
     def loop(self, clas, ik):
-        ikv = eval(self.classing.getK(ik))
-        self.classing.delK(ik)
+        ikv = eval(classing.getK(ik))
+        classing.delK(ik)
         for ic in clas:
-            icv = eval(self.classfy.getK(ic))
+            icv = eval(classfy.getK(ic))
             dist = desc.homodist(ikv, icv)
             if dist < config.homodis:
-                info = eval(self.fileinfo.getK(ik))
+                info = eval(fileinfo.getK(ik))
                 if info.has_key('classfy') is False:
                     info['classfy'] = []
                 info['classfy'].append(ic)
-                if self.fileinfo.addK(ik, info) ==1:
-                    self.monfile.insert(info)
+                if fileinfo.addK(ik, info) ==1:
+                    monfile.insert(info)
                 else:
-                    self.monfile.find_and_modify({'name':ik}, {'$push': {'classfy':ic}})
+                    monfile.find_and_modify({'name':ik}, {'$push': {'classfy':ic}})
 
                 return None, None
         return ik, ikv
 
     """计算指纹并分类"""
     def run(self):
-        clas = self.classfy.getALLKey()
-        ides = self.classing.getALLKey()
+        clas = classfy.getALLKey()
+        ides = classing.getALLKey()
         while len(ides) > 0:
             ik, ikv = self.loop(clas, ides.pop(0))
             if ik:
-                if self.classfy.addK(ik, ikv) == 1:
-                    self.clafy.insert({'classfy':ik,'identity':ikv})
-                    self.monfile.find_and_modify({'name': ik}, {'$push': {'classfy': ik}})
+                if classfy.addK(ik, ikv) == 1:
+                    clafy.insert({'classfy':ik,'identity':ikv})
+                    monfile.find_and_modify({'name': ik}, {'$push': {'classfy': ik}})
                 clas.append(ik)
 
     def stop(self):
@@ -145,8 +142,6 @@ class Search:
     def __init__(self, le):
         self.level = le
         # self.file = conn.blog.fileinfotable
-        self.identity = conn.blog.identitytable
-        self.clafy = conn.blog.classfytable
 
     def search(self, qimg, limit=10):
         ff = Descripe(qimg, 2)
@@ -170,8 +165,8 @@ class Search:
         rback = []
         count = 0
 
-        for fd in self.file.find({'classfy': {'$all':[cla]}}):
-            rs = self.identity.find_one({'f': fd['name']})
+        for fd in file.find({'classfy': {'$all':[cla]}}):
+            rs = identity.find_one({'f': fd['name']})
             if rs is not None:
                 dis = homodist(tar, rs[self.checkfun[check]])
                 if dis < config.homodis:
@@ -182,11 +177,11 @@ class Search:
         return rback
 
     def findCla(self, tar, pg=0, limit=1000):
-        count = self.clafy.count()
+        count = clafy.count()
         page = pg
         result = {}
         while page * limit < count:
-            course = self.clafy.find().skip(page * limit).limit(limit)
+            course = clafy.find().skip(page * limit).limit(limit)
             for uu in course:
                 nor = uu['identity']
                 dis = homodist(nor, tar)
@@ -220,7 +215,7 @@ def dealfile(file):
     newfilename = localtime + '.' + basename[1]
     newfile = os.path.join(copyfold, newfilename)
     shutil.copy2(file, newfile)
-    # os.remove(file)
+    os.remove(file)
     des = desc.Descripe(img, 2)
     fle = {}
     fle['size'] = img.size

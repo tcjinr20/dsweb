@@ -31,15 +31,30 @@ class dsRes:
 
         for o in item.other:
             self.other.addK(o)
-        mms = []
+        # mms = []
         for m in item.imgs:
             if self.imgs.addK(m) == 1:
-                mms.append(m)
+                threading.Thread(target=loadfun,args=(m,item.url,self)).start()
+                # mms.append(m)
 
-        DownThread(mms,item.url).run()
-
+        # DownThread(mms,item.url).run()
         return item
 
+
+def loadfun(url,purl,db):
+    fold = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+    downloadfold = ff = path.join(config.download, fold)
+    if fun.isImage(url):
+        pp = path.join(downloadfold, path.basename(url))
+        try:
+            urllib.urlretrieve(url, pp)
+        except:
+            db.imgs.removeK([url])
+            return
+
+        db.netfile.addK(pp, url)
+        db.urlfile.addK(pp, purl)
+    pass
 
 class DownThread(threading.Thread):
     def __init__(self, arg,url):
