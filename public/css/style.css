@@ -1,0 +1,38 @@
+
+.icon-bar{
+    background-color: #563d7c;
+}
+.ds-sidenav .nav{
+    display: none;
+}
+.ds-sidenav .nav.active{
+    display: block;
+}
+.logpage{
+    margin-top: 20%;
+    width: 50%;
+    max-width: 350px;
+    min-width: 300px;
+}
+.ds-label{
+    display: inline-block;
+}
+
+.game{
+    min-height: 400px;
+}
+i[class^='icon-']{
+    color: red;
+    font-size: large;
+}
+#alertpanel{
+    top:0px;
+    position: absolute;
+    display: none;
+}
+.bray{
+    position: absolute;
+    font-size: 25px;
+    color: #428bca;
+    padding: 0 15px;
+}

@@ -8,4 +8,4 @@ plugs/py/upload/
 .pyc
 .idea
 upload/
-public/
+public/upload/
