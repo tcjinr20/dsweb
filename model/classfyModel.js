@@ -16,12 +16,17 @@ proto.pagelist = function (page,callback) {
 }
 
 proto.random = function (num,callback) {
+
    db.count(function (err,len) {
-       var sk = Math.floor(Math.random()*(len-num));
-       getlist({},{'identity':0 },{limit: num, skip:sk},function (err,resu) {
-           if(resu)resu.counts = len;
-           callback(err,resu)
-       })
+       if(len){
+           var sk = Math.floor(Math.random()*(len-num));
+           getlist({},{'identity':0 },{limit: num, skip:sk},function (err,resu) {
+               if(resu)resu.counts = len;
+               callback(err,resu.list)
+           })
+       }else {
+            callback(null,[])
+       }
    })
 }
 

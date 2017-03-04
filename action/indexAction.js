@@ -86,8 +86,8 @@ proto.random = function () {
     model.random(GLOBAL.page12,function (err,info) {
         if(info){
             keys = []
-            for(var i = 0; i<info.list.length;i++){
-                keys.push(info.list[i]['classfy'])
+            for(var i = 0; i<info.length;i++){
+                keys.push(info[i]['classfy'])
             }
             fmodel.match(keys,function (err,result) {
                 if(err){
