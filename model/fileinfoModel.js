@@ -7,7 +7,7 @@ GLOBAL.db.getDBByTable('fileinfotable',function(err,table){
     if(err) throw err;
     db = table;
 })
-
+var pages = GLOBAL.page12;
 proto=module.exports={};
 
 proto.match = function (list,callback) {
@@ -17,16 +17,28 @@ proto.match = function (list,callback) {
     })
 }
 
-proto.findclass = function (cla,callback) {
-    db.find({'classfy':cla},function (err,cursor) {
+proto.findclass = function (cla,page,callback) {
+    page = page?page-1:0;
+    db.find({'classfy':cla},{limit: pages, skip:page*pages},function (err,cursor) {
         cursor.toArray(callback)
     })
 }
 
 proto.page= function (page,callback) {
     page = page?page-1:0;
-    ps = 12;
-    db.find({},{limit: ps, skip:page*ps},function (err,cursor) {
+    db.find({},{limit: pages, skip:page*pages},function (err,cursor) {
         cursor.toArray(callback)
     })
+}
+
+proto.count = function (callback) {
+    db.count();
+}
+
+proto.find = function (pid,callback) {
+    if(pid){
+        db.findOne({"_id":GLOBAL.ObjectID(pid)},callback)
+    }else{
+        callback(new Error('id is null'))
+    }
 }

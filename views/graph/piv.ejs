@@ -1,0 +1,30 @@
+<%- include('../public/header') -%>
+<div class="row">
+    <div class="col-xs-9" id="content">
+        <img src="/<%=vo.loc%>" alt="..." class="img-thumbnail">
+    </div>
+    <div class="col-xs-9">
+        <div class="media" id="comment">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="..." alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Media heading</h4>
+                ...
+            </div>
+        </div>
+        <div class="well">
+            <textarea class="form-control" rows="3" id="commentcon"></textarea>
+            <button type="button" class="btn btn-info col-xs-offset-11" onclick="upcomment('<%=vo._id%>',commentcon.value)">UP</button>
+        </div>
+    </div>
+    <div class="col-xs-3">
+
+    </div>
+    <script>
+        loadCon('/comment/comment?id=<%=vo._id%>','#comment');
+    </script>
+</div>
+<%- include('../public/footer') -%>

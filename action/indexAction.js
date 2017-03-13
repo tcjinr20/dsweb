@@ -99,6 +99,10 @@ proto.random = function () {
         }
     });
 }
+proto.getMax = function () {
+    model.count()
+    res.send(1)
+}
 
 
 proto.serach = function () {
@@ -112,8 +116,18 @@ proto.serach = function () {
 
 proto.classfy = function (param) {
     if(param.get){
-        fmodel.findclass(param.get.id,function (err,info) {
-            res.render('./graph/classfy',{'list':info})
+        var p=param.get.page||1;
+        fmodel.findclass(param.get.id,p,function (err,info) {
+            res.render('./graph/classfy',{'list':info,'pid':param.get.id})
+        })
+    }
+}
+
+proto.classfypage = function (param) {
+    if(param.get&&param.get.pid&&param.get.page){
+        var p=param.get.page||1;
+        fmodel.findclass(param.get.pid,p,function (err,info) {
+            res.render('./graph/classfyitem',{'list':info})
         })
     }
 }

@@ -1,6 +1,0 @@
-2017-03-04 13:14:36,622 - log.py - [line:17] - DEBUG - 直接打印内存占用： <function virtual_memory at 0x02B88430>
-2017-03-04 13:14:36,622 - log.py - [line:17] - DEBUG - 获取内存占用率： 37.8%
-2017-03-04 13:14:36,624 - log.py - [line:17] - DEBUG - 打印本机cpu占用率： 0.0%
-2017-03-04 13:14:36,624 - log.py - [line:17] - DEBUG -  打印该进程CPU占用率: 0.0%
-2017-03-04 13:14:36,624 - log.py - [line:17] - DEBUG - <bound method Process.memory_percent of <psutil.Process(pid=3580, name='python.exe') at 42616848>>
-2017-03-04 13:14:36,624 - log.py - [line:17] - DEBUG - percent: 0.12%

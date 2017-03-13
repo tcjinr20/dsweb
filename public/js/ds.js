@@ -288,9 +288,26 @@ function getComment($tar){
     })
 }
 
+function upcomment(picid,text){
+    if(picid&&text&&text.length>6){
+        $.post("/comment/submit",{"id":picid,"con":text},function (resuback) {
+            if(resuback){
+                $("#commentcon").val('');
+                $("#comment").append(resuback)
+            }else{
+                alert('wrong')
+            }
+        })
+    }else{
+        alert('too short');
+    }
+}
+
 function clickmore(url,mas) {
     $('#moreid').click(function () {
-        $.get(url,{'page':(parseInt($(this).data('page'))+1)},function(result){
+        var pp = parseInt($(this).data('page'));
+        $(this).data('page',pp+1);
+        $.get(url,{'page':pp+1},function(result){
             var all = $($('#tempdir').html(result).html())
             var len = all.length
             all.appendTo("#temp").children().each(function (i,e) {

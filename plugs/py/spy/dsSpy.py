@@ -5,6 +5,7 @@ from dsNet import dsNet
 from dsParse import dsParse
 from dsResult import dsRes
 import threading
+import log
 
 
 class dsSpy(threading.Thread):
@@ -21,6 +22,7 @@ class dsSpy(threading.Thread):
     def run(self):
         if self.item.status == 1:
             self.net.load(self.item)
+        log.trace(self.item.url)
         if self.item.status == 1:
             self.par.parse(self.item)
         if self.item.status == 1:

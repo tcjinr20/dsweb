@@ -18,7 +18,10 @@ proto.pagelist = function (page,callback) {
 proto.random = function (num,callback) {
    db.count(function (err,len) {
        if(len){
-           var sk = Math.floor(Math.random()*(len-num));
+           var sk= 0;
+           if(len>num)
+            sk = Math.floor(Math.random()*(len-num));
+
            getlist({},{'identity':0 },{limit: num, skip:sk},function (err,resu) {
                if(resu)resu.counts = len;
                callback(err,resu.list)
@@ -28,7 +31,6 @@ proto.random = function (num,callback) {
        }
    })
 }
-
 
 function getlist(query,where,limit,callback) {
     db.find(query,where,limit,function (err, cursor) {
@@ -48,4 +50,8 @@ function getlist(query,where,limit,callback) {
             });
         });
     })
+}
+
+proto.count = function (callback) {
+
 }

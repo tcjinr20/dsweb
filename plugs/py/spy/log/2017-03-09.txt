@@ -1,0 +1,67 @@
+INFO--2017-03-09 21:55:47,960--http://www.bttiantangs.com/download/74564.html
+INFO--2017-03-09 21:55:49,436--http://www.bttiantangs.com/download/23181.html
+INFO--2017-03-09 21:55:50,125--http://www.bttiantangs.com/torrent/145217.html
+INFO--2017-03-09 21:55:50,693--http://www.bttiantangs.com/zhuyan/Season Hubley.html
+INFO--2017-03-09 21:55:50,693--http://www.bttiantangs.com/zhuyan/Season Hubley.html
+INFO--2017-03-09 21:55:51,938--http://www.bttiantangs.com/movie/40748.html
+INFO--2017-03-09 21:55:52,535--http://www.bttiantangs.com/zhuyan/Rene Hamilton.html
+INFO--2017-03-09 21:55:52,536--http://www.bttiantangs.com/zhuyan/Rene Hamilton.html
+INFO--2017-03-09 21:55:53,994--http://www.bttiantangs.com/movie/5863.html
+INFO--2017-03-09 21:55:56,796--http://www.bttiantangs.com/zhuyan/本·金斯利.html
+INFO--2017-03-09 21:55:58,272--http://www.bttiantangs.com/download/127229.html
+INFO--2017-03-09 21:55:59,484--http://www.bttiantangs.com/zhuyan/Rory Keenan.html
+INFO--2017-03-09 21:56:01,989--http://www.bttiantangs.com/movie/34650.html
+INFO--2017-03-09 21:56:03,698--http://www.bttiantangs.com/download/138032.html
+INFO--2017-03-09 21:56:05,411--http://www.bttiantangs.com/download/142637.html
+INFO--2017-03-09 21:56:06,303--http://www.bttiantangs.com/torrent/145250.html
+INFO--2017-03-09 21:56:07,971--http://www.bttiantangs.com/download/135281.html
+INFO--2017-03-09 21:56:09,473--http://www.bttiantangs.com/movie/20556.html
+INFO--2017-03-09 21:56:11,276--http://www.bttiantangs.com/zhuyan/多米尼克·莫纳汉.html
+INFO--2017-03-09 21:56:12,844--http://www.bttiantangs.com/download/55086.html
+INFO--2017-03-09 21:56:14,176--http://www.bttiantangs.com/zhuyan/奥斯汀·尼可斯.html
+INFO--2017-03-09 21:56:15,329--http://www.bttiantangs.com/zhuyan/Adam Bakri.html
+INFO--2017-03-09 21:56:16,739--http://www.bttiantangs.com/download/141150.html
+INFO--2017-03-09 21:56:18,257--http://www.bttiantangs.com/zhuyan/柳乐优弥.html
+INFO--2017-03-09 21:56:19,253--http://www.bttiantangs.com/zhuyan/朱莉亚·斯坦伯格.html
+INFO--2017-03-09 21:56:20,226--http://www.bttiantangs.com/zhuyan/达纳·古尔德.html
+INFO--2017-03-09 21:56:21,637--http://www.bttiantangs.com/download/145862.html
+INFO--2017-03-09 21:56:23,891--http://www.bttiantangs.com/movie/39103.html
+INFO--2017-03-09 21:56:25,503--http://www.bttiantangs.com/download/124719.html
+INFO--2017-03-09 21:56:28,217--http://www.bttiantangs.com/dianying/2016/04/04/42055.html
+INFO--2017-03-09 21:56:29,466--http://www.bttiantangs.com/movie/24420.html
+INFO--2017-03-09 21:56:31,075--http://www.bttiantangs.com/download/30665.html
+INFO--2017-03-09 21:56:32,267--http://www.bttiantangs.com/zhuyan/塔姆茵·瑟斯沃克.html
+INFO--2017-03-09 21:56:33,789--http://www.bttiantangs.com/download/17440.html
+INFO--2017-03-09 21:56:35,266--http://www.bttiantangs.com/download/143586.html
+INFO--2017-03-09 21:56:36,413--http://www.bttiantangs.com/movie/17874.html
+INFO--2017-03-09 21:56:37,798--http://www.bttiantangs.com/zhuyan/雅雅英.html
+INFO--2017-03-09 21:56:39,556--http://www.bttiantangs.com/movie/33373.html
+INFO--2017-03-09 21:56:41,025--http://www.bttiantangs.com/download/14741.html
+INFO--2017-03-09 21:56:43,602--http://www.bttiantangs.com/sb/动画/3.html
+INFO--2017-03-09 21:56:45,243--http://www.bttiantangs.com/download/145204.html
+INFO--2017-03-09 21:56:46,352--http://www.bttiantangs.com/movie/23428.html
+INFO--2017-03-09 21:56:47,602--http://www.bttiantangs.com/movie/33977.html
+INFO--2017-03-09 21:56:49,744--http://www.bttiantangs.com/zhuyan/石原里美.html
+INFO--2017-03-09 21:56:51,017--http://www.bttiantangs.com/download/118891.html
+INFO--2017-03-09 21:56:51,648--http://www.bttiantangs.com/btbt.php?hash=c0059327038dee6287512379510e97f8b0cc4cac
+INFO--2017-03-09 21:56:52,240--http://www.bttiantangs.com/btbt.php?hash=e77fec5104d8c9acd186d82d863ca42b81e0b628
+INFO--2017-03-09 21:56:53,466--http://www.bttiantangs.com/movie/8899.html
+INFO--2017-03-09 21:56:54,881--http://www.bttiantangs.com/download/15332.html
+INFO--2017-03-09 21:56:55,849--http://www.bttiantangs.com/zhuyan/Paraic Nialand.html
+INFO--2017-03-09 21:56:57,532--http://www.bttiantangs.com/download/138033.html
+INFO--2017-03-09 21:56:59,153--http://www.bttiantangs.com/download/144247.html
+INFO--2017-03-09 21:57:00,392--http://www.bttiantangs.com/movie/40753.html
+INFO--2017-03-09 21:57:01,644--http://www.bttiantangs.com/download/118649.html
+INFO--2017-03-09 21:57:03,002--http://www.bttiantangs.com/download/134040.html
+INFO--2017-03-09 21:57:03,914--http://www.bttiantangs.com/btbt.php?hash=224c72f87afefaf66d192efb52c949b84513cc25
+INFO--2017-03-09 21:57:06,104--http://www.bttiantangs.com/download/109368.html
+INFO--2017-03-09 21:57:07,667--http://www.bttiantangs.com/download/224.html
+INFO--2017-03-09 21:57:09,187--http://www.bttiantangs.com/movie/2832.html
+INFO--2017-03-09 21:57:10,464--http://www.bttiantangs.com/download/140982.html
+INFO--2017-03-09 21:57:12,065--http://www.bttiantangs.com/download/104567.html
+INFO--2017-03-09 21:57:13,592--http://www.bttiantangs.com/download/145444.html
+INFO--2017-03-09 21:57:15,545--http://www.bttiantangs.com/download/58960.html
+INFO--2017-03-09 21:57:16,789--http://www.bttiantangs.com/download/119344.html
+INFO--2017-03-09 21:57:20,006--http://www.bttiantangs.com/download/143911.html
+INFO--2017-03-09 21:57:21,408--http://www.bttiantangs.com/download/147098.html
+INFO--2017-03-09 22:19:01,747--http://www.bttiantangs.com/zhuyan/娜塔丽·马丁内兹.html

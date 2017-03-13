@@ -16,18 +16,18 @@
             <input type="file" id="selfile" style="display: none" accept="image/*">
         </div>
         <div id="content">
-            <div class="row" id="temp">
-                <% for(var i = 0;i<list.length;i++){%>
-                <div class="col-xs-6 col-md-3">
-                    <a href="index/classfy?id=<%=list[i].name%>" class="thumbnail">
-                        <img  alt="100%x180" src="/<%=list[i].loc%>"  data-holder-rendered="true">
-                    </a>
-                </div>
-                <%}%>
+            <div class="row" id="temp" data-page='1' data-pid=<%=pid%>>
+                <%- include('classfyitem') -%>
             </div>
+            <%if(list.length>12){%>
+            <button type="button" id="moreid" class="btn btn-danger btn-lg btn-block" data-page="1">more</button>
+            <%}%>
         </div>
         <script>
             drag()
+            $('#temp').imgflash(function (mas) {
+                clickmore('/index/classfypage',mas)
+            });
         </script>
     </div>
     <div class="col-xs-3">

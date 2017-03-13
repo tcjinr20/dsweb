@@ -30,6 +30,8 @@ clafy = conn.blog.classfytable
 monfile = conn.blog.fileinfotable
 '''每张图片的指纹（指纹有多种）'''
 identity = conn.blog.identitytable
+'''数值统计'''
+ana = conn.blog.analysis
 
 
 class AnalysisByDB:
@@ -59,6 +61,7 @@ class AnalysisByDB:
                 del info['identity']
                 fileinfo.addK(info['name'], info)
                 monfile.insert_one(info)
+
             backup.addK(netfile.getK(k),urlfile.getK(k))
             netfile.delK(k)
             urlfile.delK(k)
@@ -112,8 +115,11 @@ class Classfy:
                 info['classfy'].append(ic)
                 if fileinfo.addK(ik, info) ==1:
                     monfile.insert(info)
+                    ana.insert({'type':'file','num':1})
                 else:
-                    monfile.find_and_modify({'name':ik}, {'$push': {'classfy':ic}})
+                    monfile.find_and_modify({'name':ik},{'$push': {'classfy':ic}})
+                    ana.find_and_modify({"type": 'file'}, [], {"$inc": {'num': 1}})
+
 
                 return None, None
         return ik, ikv
@@ -127,6 +133,7 @@ class Classfy:
             if ik:
                 if classfy.addK(ik, ikv) == 1:
                     clafy.insert({'classfy':ik,'identity':ikv})
+                    ana.find_and_modify({"type":'class'}, [], {"$inc":{'num':1}})
                     monfile.find_and_modify({'name': ik}, {'$push': {'classfy': ik}})
                 clas.append(ik)
 
